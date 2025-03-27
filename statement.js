@@ -4,34 +4,35 @@ const plays = require('./plays.json');
 function statement(invoice, plays) {
     const statementData = {};
     statementData.customer = invoice.customer;
-    return renderPlanText(statementData, invoice, plays);
+    statementData.performances = invoice.performances;
+    return renderPlanText(statementData, plays);
 }
 
-function renderPlanText(data, invoice, plays){
+function renderPlanText(data, plays){
     let result = `청구 내역 (고객명: ${data.customer})\n`;
     
-    for (let perf of invoice.performances) {
+    for (let perf of data.performances) {
         result += `  ${playFor(perf).name}: ${usd(amountFor(perf))}원 (${perf.audience}석)\n`;
     }
 
-    result += `총액: ${usd(totalAmount(invoice))}원\n`;
-    result += `적립 포인트: ${totalVolumeCredits(invoice)}점\n`;
+    result += `총액: ${usd(totalAmount(data))}원\n`;
+    result += `적립 포인트: ${totalVolumeCredits(data)}점\n`;
     return result;
 
 
-    function totalAmount(invoice){
+    function totalAmount(data){
         let result = 0;
         
-        for (let perf of invoice.performances) {
+        for (let perf of data.performances) {
             result += amountFor(perf);
         }
         return result;
     }
     
-    function totalVolumeCredits(invoice){
+    function totalVolumeCredits(data){
         let result = 0;
         // volumeCredits 별도 for문으로 분리
-        for (let perf of invoice.performances) {
+        for (let perf of data.performances) {
            // 포인트 적립
            result += volumeCreditsFor(perf);    // 추출한 함수로 값을 누적 처리
         }
