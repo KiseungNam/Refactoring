@@ -2,10 +2,12 @@ const invoice = require('./invoices.json');
 const plays = require('./plays.json');
 
 function statement(invoice, plays) {
-    return renderPlanText(invoice, plays);
+    const statementData = {};
+
+    return renderPlanText(statementData, invoice, plays);
 }
 
-function renderPlanText(invoice, plays){
+function renderPlanText(data, invoice, plays){
     let result = `청구 내역 (고객명: ${invoice.customer})\n`;
     
     for (let perf of invoice.performances) {
