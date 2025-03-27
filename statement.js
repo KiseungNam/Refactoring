@@ -7,13 +7,16 @@ function statement(invoice, plays) {
     let result = `청구 내역 (고객명: ${invoice.customer})\n`;
     
     for (let perf of invoice.performances) {
-        
-        // 포인트 적립
-        volumeCredits += volumeCreditsFor(perf);    // 추출한 함수로 값을 누적 처리
                 
         // 청구내역 출력 줄 추가
         result += `  ${playFor(perf).name}: ${usd(amountFor(perf))}원 (${perf.audience}석)\n`;
         totalAmount += amountFor(perf);
+    }
+
+    // volumeCredits 별도 for문으로 분리
+    for (let perf of invoice.performances) {
+       // 포인트 적립
+       volumeCredits += volumeCreditsFor(perf);    // 추출한 함수로 값을 누적 처리
     }
 
     result += `총액: ${usd(totalAmount)}원\n`;
