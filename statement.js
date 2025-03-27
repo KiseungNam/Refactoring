@@ -14,22 +14,22 @@ function statement(invoice, plays) {
 }
 
 function totalAmount(invoice){
-    let totalAmount = 0;
+    let result = 0;
     
     for (let perf of invoice.performances) {
-        totalAmount += amountFor(perf);
+        result += amountFor(perf);
     }
-    return totalAmount;
+    return result;
 }
 
 function totalVolumeCredits(invoice){
-    let volumeCredits = 0;
+    let result = 0;
     // volumeCredits 별도 for문으로 분리
     for (let perf of invoice.performances) {
        // 포인트 적립
-       volumeCredits += volumeCreditsFor(perf);    // 추출한 함수로 값을 누적 처리
+       result += volumeCreditsFor(perf);    // 추출한 함수로 값을 누적 처리
     }
-    return volumeCredits;
+    return result;
 }
 
 // format 함수 추출
