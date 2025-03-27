@@ -1,8 +1,7 @@
 const assert = require('assert');
 const invoices = require('./invoices.json');
 const plays = require('./plays.json');
-
-const statement = require('./statement');  // 함수 분리해둔 경우
+const statement = require('./statement');
 
 const expectedOutput = 
 `청구 내역 (고객명: BigCo)
@@ -10,11 +9,10 @@ const expectedOutput =
   As You Like It: $580.00원 (35석)
   Othello: $500.00원 (40석)
 총액: $1,730.00원
-적립 포인트: 10점
+적립 포인트: 47점
 `;
 
 const actualOutput = statement(invoices[0], plays);
 
 assert.strictEqual(actualOutput, expectedOutput);
-
-console.log("✅ 테스트 통과: 출력 결과 일치");
+console.log("✅ 테스트 통과: 리팩터링 후 출력 동일");

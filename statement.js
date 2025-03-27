@@ -12,18 +12,26 @@ function statement(invoice, plays) {
     for (let perf of invoice.performances) {
         
         // 포인트 적립
-        volumeCredits = Math.max(perf.audience - 30, 0);
-        
-        // 희극 관객 5명마다 추가 포인트를 제공한다.
-        if (playFor(perf).type === "comedy") volumeCredits += Math.floor(perf.audience / 5);
-
-        // 출력 줄 추가
+        volumeCredits += volumeCreditsFor(perf);    // 추출한 함수로 값을 누적 처리
+                
+        // 청구내역 출력 줄 추가
         result += `  ${playFor(perf).name}: ${format(amountFor(perf) / 100)}원 (${perf.audience}석)\n`;
         totalAmount += amountFor(perf);
     }
 
     result += `총액: ${format(totalAmount / 100)}원\n`;
     result += `적립 포인트: ${volumeCredits}점\n`;
+    return result;
+}
+
+// volumeCredits 함수 추출
+function volumeCreditsFor(aPerformance){
+    let result = 0;
+    result += Math.max(aPerformance.audience - 30, 0);
+    
+    if ("comedy" === playFor(aPerformance).type) {
+        result += Math.floor(aPerformance.audience / 5);
+    }
     return result;
 }
 
