@@ -2,13 +2,12 @@ const invoice = require('./invoices.json');
 const plays = require('./plays.json');
 
 function statement(invoice, plays) {
-    let totalAmount = 0;
     let result = `청구 내역 (고객명: ${invoice.customer})\n`;
     
     for (let perf of invoice.performances) {
-        // 청구내역 출력 줄 추가
         result += `  ${playFor(perf).name}: ${usd(amountFor(perf))}원 (${perf.audience}석)\n`;
     }
+    
     totalAmount = appleSauce(invoice);
     
     result += `총액: ${usd(totalAmount)}원\n`;
