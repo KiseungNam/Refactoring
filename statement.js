@@ -5,14 +5,12 @@ function statement(invoice, plays) {
     let totalAmount = 0;
     let volumeCredits = 0;
     let result = `청구 내역 (고객명: ${invoice.customer})\n`;
-    const format = new Intl.NumberFormat("en-US",
-            {style:"currency", currency: "USD"
+    const format = new Intl.NumberFormat("en-US"
+            , {style:"currency", currency: "USD"
             , minimumFractionDigits:2}).format;
 
     for (let perf of invoice.performances) {
         
-        let thisAmount = amountFor(perf);     // 추출한 함수로 변환
-
         // 포인트 적립
         volumeCredits = Math.max(perf.audience - 30, 0);
         
@@ -20,8 +18,8 @@ function statement(invoice, plays) {
         if (playFor(perf).type === "comedy") volumeCredits += Math.floor(perf.audience / 5);
 
         // 출력 줄 추가
-        result += `  ${playFor(perf).name}: ${format(thisAmount / 100)}원 (${perf.audience}석)\n`;
-        totalAmount += thisAmount;
+        result += `  ${playFor(perf).name}: ${format(amountFor(perf) / 100)}원 (${perf.audience}석)\n`;
+        totalAmount += amountFor(perf);
     }
 
     result += `총액: ${format(totalAmount / 100)}원\n`;
