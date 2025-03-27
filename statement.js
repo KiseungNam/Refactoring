@@ -12,16 +12,20 @@ function statement(invoice, plays) {
         totalAmount += amountFor(perf);
     }
     
+    let volumeCredits = totalVolumeCredits();
+    result += `총액: ${usd(totalAmount)}원\n`;
+    result += `적립 포인트: ${volumeCredits}점\n`;
+    return result;
+}
+
+function totalVolumeCredits(){
     let volumeCredits = 0;
     // volumeCredits 별도 for문으로 분리
     for (let perf of invoice.performances) {
        // 포인트 적립
        volumeCredits += volumeCreditsFor(perf);    // 추출한 함수로 값을 누적 처리
     }
-
-    result += `총액: ${usd(totalAmount)}원\n`;
-    result += `적립 포인트: ${volumeCredits}점\n`;
-    return result;
+    return volumeCredits;
 }
 
 // format 함수 추출
