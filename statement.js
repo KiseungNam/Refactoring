@@ -7,15 +7,13 @@ function statement(invoice, plays) {
     for (let perf of invoice.performances) {
         result += `  ${playFor(perf).name}: ${usd(amountFor(perf))}원 (${perf.audience}석)\n`;
     }
-    
-    totalAmount = appleSauce(invoice);
-    
-    result += `총액: ${usd(totalAmount)}원\n`;
+
+    result += `총액: ${usd(totalAmount(invoice))}원\n`;
     result += `적립 포인트: ${totalVolumeCredits(invoice)}점\n`;
     return result;
 }
 
-function appleSauce(invoice){
+function totalAmount(invoice){
     let totalAmount = 0;
     
     for (let perf of invoice.performances) {
