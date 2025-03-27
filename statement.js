@@ -10,7 +10,7 @@ function statement(invoice, plays) {
             , minimumFractionDigits:2}).format;
 
     for (let perf of invoice.performances) {
-        const play = plays[perf.playID];
+        const play = playFor(perf);
         let thisAmount = amountFor(perf, play);     // 추출한 함수로 변환
 
         // 포인트 적립
@@ -51,6 +51,10 @@ function amountFor(aPerformance, play){
             throw new Error(`알 수 없는 장르: ${play.type}`);
     }
     return result;      // 함수 안에서 값이 바뀌는 변수 반환
+}
+
+function playFor(aPerformance){
+    return plays[aPerformance.playID];
 }
 
 module.exports = statement;
