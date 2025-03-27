@@ -11,7 +11,7 @@ function statement(invoice, plays) {
 
     for (let perf of invoice.performances) {
         
-        let thisAmount = amountFor(perf, playFor(perf));     // 추출한 함수로 변환
+        let thisAmount = amountFor(perf);     // 추출한 함수로 변환
 
         // 포인트 적립
         volumeCredits = Math.max(perf.audience - 30, 0);
@@ -30,7 +30,7 @@ function statement(invoice, plays) {
 }
 
 // 값이 바뀌지 않는 변수는 매개변수로 전달
-function amountFor(aPerformance, play){
+function amountFor(aPerformance){
     let result = 0;     // 변수를 초기화하는 코드
 
     switch (playFor(aPerformance).type) {
